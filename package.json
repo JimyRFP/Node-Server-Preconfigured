@@ -1,13 +1,14 @@
 {
-  "name": "nodebackendbase",
+  "name": "serverpreconfigured",
   "version": "1.0.0",
-  "description": "\"BackEnd in node express basic\"",
+  "description": "\"Pre-configured server with authentication system and database integration\"",
   "main": "dist/server.js",
+  "keywords": ["server","pre configured","database","authentication"],
   "type": "commonjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ./dist/server.js",
-    "dev": "nodemon tsc"
+    "dev": "npx nodemon"
   },
   "author": "Rafael Floriani Pinto",
   "license": "MIT",
