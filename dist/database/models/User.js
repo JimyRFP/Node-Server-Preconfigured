@@ -11,7 +11,7 @@ class User extends sequelize_1.Model {
             password_hash: sequelize_2.DataTypes.STRING,
         }, {
             sequelize: sequelize,
-            tableName: 'users',
+            tableName: 'spc_users',
         });
     }
 }

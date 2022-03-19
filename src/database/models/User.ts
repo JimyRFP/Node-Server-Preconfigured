@@ -11,7 +11,7 @@ export class User extends Model{
         },
         { 
           sequelize:sequelize,  
-          tableName: 'users',  
+          tableName: 'spc_users',  
         }
         );
     }
