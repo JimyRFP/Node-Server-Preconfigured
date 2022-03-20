@@ -24,6 +24,3 @@ exports.checkWSAuthToken = wsauth_1.checkWSAuthToken;
 const expressServer_1 = __importDefault(require("./expressServer"));
 exports.default = expressServer_1.default;
 const e = new expressServer_1.default();
-e.initAuthSystem();
-e.initWSAuthSystem();
-e.listen(3069);

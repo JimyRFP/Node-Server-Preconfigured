@@ -9,6 +9,3 @@ export { checkWSAuthToken } from "./wsauth/wsauth";
 import ExpressServer from "./expressServer";
 export default ExpressServer;
 const e=new ExpressServer();
-e.initAuthSystem();
-e.initWSAuthSystem();
-e.listen(3069);
