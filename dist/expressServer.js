@@ -8,10 +8,12 @@ const sessions_1 = require("./modules/sessions");
 const postreader_1 = require("./modules/postreader");
 const initcors_1 = require("./modules/initcors");
 const env_1 = __importDefault(require("./settings/env"));
-const auth_1 = __importDefault(require("./routes/auth"));
+const users_1 = __importDefault(require("./routes/users"));
+const wsauth_1 = require("./routes/wsauth");
 class ExpressServer {
     constructor() {
         this.authBaseUrl = "";
+        this.wsAuthBaseUrl = "";
         this.usePort = env_1.default.PORT;
         this.app = express_1.default();
         this.initModules();
@@ -28,7 +30,11 @@ class ExpressServer {
     }
     initAuthSystem(baseUrl = '/user') {
         this.authBaseUrl = baseUrl;
-        this.app.use(this.authBaseUrl, auth_1.default);
+        this.app.use(this.authBaseUrl, users_1.default);
+    }
+    initWSAuthSystem(wsBaseUrl = '/ws') {
+        this.wsAuthBaseUrl = wsBaseUrl;
+        this.app.use(this.wsAuthBaseUrl, wsauth_1.router);
     }
     getApp() {
         return this.app;

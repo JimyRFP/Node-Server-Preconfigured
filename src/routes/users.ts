@@ -5,11 +5,18 @@ import { JSONResponse } from "../utils/response";
 import { userIsLogged } from "../auth/auth";
 import meta_sanitizer from 'meta-sanitizer';
 import { checkUserPassword } from "../users/users";
+import { createUser } from "../users/users";
 enum LoginErrorCode{
     NoError=0,
     InvalidParams,
     InvalidPassword,
 
+}
+enum RegisterUserErrorCode{
+   NoError=0,
+   InvalidParams,
+   UserExist,
+   InternalError
 }
 const router=express.Router();
 router.post('/logout',(req,res)=>{
@@ -37,6 +44,21 @@ router.post('/login',async (req,res)=>{
        return res.send(JSONResponse(true,LoginErrorCode.NoError,"Login Ok"));
     }
     return res.send(JSONResponse(false,LoginErrorCode.InvalidPassword,"Invalid Password"));
+});
+router.post('/register',async (req,res)=>{
+    try{
+      let email=meta_sanitizer.sanitizeEmail(req.body.email||'');
+      let password=meta_sanitizer.queryProtector(req.body.password||'');
+      let name=meta_sanitizer.SanitizerEngine(req.body.name||'',true,false,[' ']).sanitizedData;
+      if(email=="" || password=="" || name=="")
+        return res.send(JSONResponse(false,RegisterUserErrorCode.InvalidParams,"Invalid params"));
+      await createUser({first_name:name,email:email,password_string:password});
+      return res.send(JSONResponse(true,RegisterUserErrorCode.NoError,"","REGISTER OK"));
+    }catch(e){
+       if(e==="User exist")
+         return res.send(JSONResponse(false,RegisterUserErrorCode.UserExist,"User Exist"));
+       return res.send(JSONResponse(false,RegisterUserErrorCode.InternalError,"I-Error"));  
+    }
 });
 
 export default router;

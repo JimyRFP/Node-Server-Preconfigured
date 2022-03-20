@@ -3,13 +3,16 @@ import { initSessions } from "./modules/sessions";
 import { initPostReader } from "./modules/postreader";
 import { initCors } from "./modules/initcors";
 import  ENV  from "./settings/env";
-import authRouter from "./routes/auth";
+import authRouter from "./routes/users";
+import { router as wsAuthRoter } from "./routes/wsauth";
 export default class ExpressServer{
     app:any;
     authBaseUrl:string;
     usePort:number;
+    wsAuthBaseUrl:string;
     constructor(){
        this.authBaseUrl="";
+       this.wsAuthBaseUrl="";
        this.usePort=ENV.PORT;
        this.app=express();
        this.initModules();
@@ -28,6 +31,10 @@ export default class ExpressServer{
     initAuthSystem(baseUrl:string='/user'){
        this.authBaseUrl=baseUrl;
        this.app.use(this.authBaseUrl,authRouter);
+    }
+    initWSAuthSystem(wsBaseUrl:string='/ws'){
+       this.wsAuthBaseUrl=wsBaseUrl;
+       this.app.use(this.wsAuthBaseUrl,wsAuthRoter);
     }
 
     getApp(){

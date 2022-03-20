@@ -27,6 +27,20 @@ function getUserByEmail(email) {
     });
 }
 exports.getUserByEmail = getUserByEmail;
+function getUserIdByUserEmail(email) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            let u = yield getUserByEmail(email);
+            if (u == null || u == undefined)
+                return NaN;
+            return u.dataValues.id;
+        }
+        catch (e) {
+            return NaN;
+        }
+    });
+}
+exports.getUserIdByUserEmail = getUserIdByUserEmail;
 function deleteUserById(id) {
     return __awaiter(this, void 0, void 0, function* () {
         let result = yield User_1.User.destroy({ where: { id: id.toString() } });

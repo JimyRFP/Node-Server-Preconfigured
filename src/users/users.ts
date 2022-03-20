@@ -12,6 +12,16 @@ export async function getUserByEmail(email:string){
      let result=await User.findOne({where:{email:email}});
      return (result);
 }
+export async function getUserIdByUserEmail(email:string):Promise<number>{
+     try{
+        let u=await getUserByEmail(email);
+        if(u==null || u==undefined)
+          return NaN;
+        return u.dataValues.id;
+     }catch(e){
+        return NaN;
+     }
+}
 
 export async function deleteUserById(id:Number){
      let result=await User.destroy({where:{id:id.toString()}});
