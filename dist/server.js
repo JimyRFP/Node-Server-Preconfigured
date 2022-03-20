@@ -3,35 +3,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
-const sessions_1 = require("./modules/sessions");
-const postreader_1 = require("./modules/postreader");
-const initcors_1 = require("./modules/initcors");
-const env_1 = __importDefault(require("./settings/env"));
-const auth_1 = __importDefault(require("./routes/auth"));
-class ExpressServer {
-    constructor() {
-        this.authBaseUrl = "";
-        this.usePort = env_1.default.PORT;
-        this.app = express_1.default();
-        this.initModules();
-    }
-    listen(port = null) {
-        if (port != null)
-            this.usePort = parseInt(port);
-        this.app.listen(this.usePort);
-    }
-    initModules() {
-        sessions_1.initSessions(this.app);
-        postreader_1.initPostReader(this.app);
-        initcors_1.initCors(this.app);
-    }
-    initAuthSystem(baseUrl = '/user') {
-        this.authBaseUrl = baseUrl;
-        this.app.use(this.authBaseUrl, auth_1.default);
-    }
-    getApp() {
-        return this.app;
-    }
-}
-exports.default = ExpressServer;
+var auth_1 = require("./auth/auth");
+exports.userIsLogged = auth_1.userIsLogged;
+;
+var User_1 = require("./database/models/User");
+exports.User = User_1.User;
+var database_1 = require("./database/database");
+exports.dataBase = database_1.dataBase;
+var secureset_1 = require("./sessions/secureset");
+exports.setSessionValue = secureset_1.setSessionValue;
+exports.deleteSessionValue = secureset_1.deleteSessionValue;
+var secureget_1 = require("./sessions/secureget");
+exports.getSessionValue = secureget_1.getSessionValue;
+var users_1 = require("./users/users");
+exports.checkUserPassword = users_1.checkUserPassword;
+const expressServer_1 = __importDefault(require("./expressServer"));
+exports.default = expressServer_1.default;

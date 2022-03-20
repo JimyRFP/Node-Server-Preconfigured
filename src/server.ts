@@ -1,36 +1,8 @@
-import express from "express";
-import { initSessions } from "./modules/sessions";
-import { initPostReader } from "./modules/postreader";
-import { initCors } from "./modules/initcors";
-import  ENV  from "./settings/env";
-import authRouter from "./routes/auth";
-export default class ExpressServer{
-     app:any;
-     authBaseUrl:string;
-     usePort:number;
-     constructor(){
-        this.authBaseUrl="";
-        this.usePort=ENV.PORT;
-        this.app=express();
-        this.initModules();
-     }
-     listen(port:any=null){
-        if(port!=null)
-           this.usePort=parseInt(port);
-        this.app.listen(this.usePort);  
-     }
-
-     initModules(){
-       initSessions(this.app);
-       initPostReader(this.app);
-       initCors(this.app);
-     }
-     initAuthSystem(baseUrl:string='/user'){
-        this.authBaseUrl=baseUrl;
-        this.app.use(this.authBaseUrl,authRouter);
-     }
-
-     getApp(){
-       return this.app;
-     }
-}
+export { userIsLogged } from "./auth/auth";;
+export { User } from "./database/models/User";
+export { dataBase } from "./database/database";
+export { setSessionValue,deleteSessionValue } from "./sessions/secureset";
+export { getSessionValue } from "./sessions/secureget";
+export { checkUserPassword } from "./users/users";
+import ExpressServer from "./expressServer";
+export default ExpressServer;
