@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const server_1 = require("../server");
 const server_2 = require("../server");
 const random_1 = require("./../utils/string/random");
+const types_1 = require("./types");
 server_1.WebSocketAuth.init(server_2.dataBase);
 function getWSAuthDataByUserId(userId) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -32,15 +33,19 @@ function setWSAuthDataNewToken(userId, expiration_hours = 72) {
             let token = random_1.randomString(50);
             let expiration = new Date();
             expiration.setTime(expiration.getTime() + expiration_hours * 60 * 60 * 1000);
-            if (ws == null || ws == undefined) {
+            if (!Boolean(ws)) {
                 return yield server_1.WebSocketAuth.create({ user_id: userId.toString(),
                     token: token,
                     expiration: expiration,
+                    is_active: true,
+                    auth_connection_token: "",
                 });
             }
             else {
                 ws.token = token;
                 ws.expiration = expiration;
+                ws.is_active = true;
+                ws.auth_connection_token = "";
                 return yield ws.save();
             }
         }
@@ -56,6 +61,8 @@ function checkWSAuthToken(userId, token) {
             let ws = yield getWSAuthDataByUserId(userId);
             if (!Boolean(ws))
                 return false;
+            if (!ws.dataValues.is_active)
+                return false;
             if (ws.dataValues.token != token)
                 return false;
             if (Date.now() > ws.dataValues.expiration.getTime())
@@ -63,8 +70,44 @@ function checkWSAuthToken(userId, token) {
             return true;
         }
         catch (e) {
-            return false;
+            throw e;
         }
     });
 }
 exports.checkWSAuthToken = checkWSAuthToken;
+function authenticateWS(userId, token, connection_token) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            if (!(yield checkWSAuthToken(userId, token)))
+                return types_1.AuthenticateWSResult.InvalidToken;
+            let ws = yield getWSAuthDataByUserId(userId);
+            ws.auth_connection_token = connection_token;
+            yield ws.save();
+            return types_1.AuthenticateWSResult.OK;
+        }
+        catch (e) {
+            throw e;
+        }
+    });
+}
+exports.authenticateWS = authenticateWS;
+function checkConnectionAuth(userId, connection_token) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            let ws = yield getWSAuthDataByUserId(userId);
+            if (!Boolean(ws))
+                return false;
+            if (!ws.dataValues.is_active)
+                return false;
+            if (Date.now() > ws.dataValues.expiration.getTime())
+                return false;
+            if (ws.dataValues.auth_connection_token !== connection_token)
+                return false;
+            return true;
+        }
+        catch (e) {
+            throw e;
+        }
+    });
+}
+exports.checkConnectionAuth = checkConnectionAuth;

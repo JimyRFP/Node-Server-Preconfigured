@@ -9,7 +9,7 @@ export async function createArgon2Hash(password_string:string){
    }
 }
 
-export async function checkArgon2Password(password_hash:string,password_string:string){
+export async function checkArgon2Password(password_hash:string,password_string:string):Promise<PasswordVerifyResult>{
   try{
      if(await argon2.verify(password_hash,password_string))
         return "Match";

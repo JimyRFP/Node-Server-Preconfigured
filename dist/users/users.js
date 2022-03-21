@@ -31,7 +31,7 @@ function getUserIdByUserEmail(email) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             let u = yield getUserByEmail(email);
-            if (u == null || u == undefined)
+            if (!Boolean(u))
                 return NaN;
             return u.dataValues.id;
         }

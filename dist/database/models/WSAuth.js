@@ -8,6 +8,8 @@ class WebSocketAuth extends sequelize_1.Model {
             token: sequelize_2.DataTypes.STRING,
             expiration: sequelize_2.DataTypes.DATE,
             user_id: sequelize_2.DataTypes.INTEGER,
+            is_active: sequelize_2.DataTypes.BOOLEAN,
+            auth_connection_token: sequelize_2.DataTypes.STRING,
         }, {
             sequelize: sequelize,
             tableName: 'spc_wsauth'

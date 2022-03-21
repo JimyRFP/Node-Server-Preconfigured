@@ -5,7 +5,9 @@ export { setSessionValue,deleteSessionValue } from "./sessions/secureset";
 export { getSessionValue } from "./sessions/secureget";
 export { checkUserPassword } from "./users/users";
 export { WebSocketAuth } from "./database/models/WSAuth";
-export { checkWSAuthToken } from "./wsauth/wsauth";
+export { checkWSAuthToken ,authenticateWS,checkConnectionAuth} from "./wsauth/wsauth";
+export { randomString } from "./utils/string/random"
 import ExpressServer from "./expressServer";
+;
 export default ExpressServer;
 const e=new ExpressServer();

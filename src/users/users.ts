@@ -15,7 +15,7 @@ export async function getUserByEmail(email:string){
 export async function getUserIdByUserEmail(email:string):Promise<number>{
      try{
         let u=await getUserByEmail(email);
-        if(u==null || u==undefined)
+        if(!Boolean(u))
           return NaN;
         return u.dataValues.id;
      }catch(e){

@@ -21,6 +21,16 @@ module.exports = {
          type:Sequelize.DATE,
          allowNull:false,
        },
+       is_active:{
+         type:Sequelize.BOOLEAN,
+         allowNull:false,
+         defaultValue:true,
+       },
+       auth_connection_token:{
+         type:Sequelize.STRING,
+         allowNull:true,
+         defaultValue:"",
+       },
        created_at:{
         type:Sequelize.DATE,
         allowNull:false,
