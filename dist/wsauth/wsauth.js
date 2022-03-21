@@ -12,7 +12,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const server_1 = require("../server");
 const server_2 = require("../server");
 const random_1 = require("./../utils/string/random");
-const types_1 = require("./types");
 server_1.WebSocketAuth.init(server_2.dataBase);
 function getWSAuthDataByUserId(userId) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -79,11 +78,11 @@ function authenticateWS(userId, token, connection_token) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             if (!(yield checkWSAuthToken(userId, token)))
-                return types_1.AuthenticateWSResult.InvalidToken;
+                return false;
             let ws = yield getWSAuthDataByUserId(userId);
             ws.auth_connection_token = connection_token;
             yield ws.save();
-            return types_1.AuthenticateWSResult.OK;
+            return true;
         }
         catch (e) {
             throw e;

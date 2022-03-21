@@ -1,7 +1,6 @@
 import { WebSocketAuth } from "../server";
 import { dataBase } from "../server";
 import {randomString} from "./../utils/string/random";
-import {AuthenticateWSResult} from "./types";
 WebSocketAuth.init(dataBase);
 export async function getWSAuthDataByUserId(userId:number):Promise<any>{
    try{
@@ -54,14 +53,14 @@ export async function checkWSAuthToken(userId:number,token:string):Promise<boole
     }
 }
 
-export async function authenticateWS(userId:number,token:string,connection_token:string):Promise<AuthenticateWSResult>{
+export async function authenticateWS(userId:number,token:string,connection_token:string):Promise<boolean>{
     try{
       if(!(await checkWSAuthToken(userId,token)))
-         return AuthenticateWSResult.InvalidToken; 
+         return false; 
       let ws=await getWSAuthDataByUserId(userId);  
       ws.auth_connection_token=connection_token;
       await ws.save();
-      return AuthenticateWSResult.OK;
+      return true;
     }catch(e){
        throw e;
     } 
