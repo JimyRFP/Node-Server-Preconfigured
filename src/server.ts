@@ -6,8 +6,7 @@ export { getSessionValue } from "./sessions/secureget";
 export { checkUserPassword } from "./users/users";
 export { WebSocketAuth } from "./database/models/WSAuth";
 export { checkWSAuthToken ,authenticateWS,checkConnectionAuth} from "./wsauth/wsauth";
-export { randomString } from "./utils/string/random"
+export { randomString } from "./utils/string/random";
+export { JSONResponse } from "./utils/response";
 import ExpressServer from "./expressServer";
-;
 export default ExpressServer;
-const e=new ExpressServer();
