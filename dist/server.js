@@ -1,28 +1,23 @@
 "use strict";
+function __export(m) {
+    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
+}
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var auth_1 = require("./auth/auth");
-exports.userIsLogged = auth_1.userIsLogged;
+__export(require("./auth/auth"));
 ;
 var User_1 = require("./database/models/User");
 exports.User = User_1.User;
 var database_1 = require("./database/database");
 exports.dataBase = database_1.dataBase;
-var secureset_1 = require("./sessions/secureset");
-exports.setSessionValue = secureset_1.setSessionValue;
-exports.deleteSessionValue = secureset_1.deleteSessionValue;
-var secureget_1 = require("./sessions/secureget");
-exports.getSessionValue = secureget_1.getSessionValue;
-var users_1 = require("./users/users");
-exports.checkUserPassword = users_1.checkUserPassword;
+__export(require("./sessions/secureset"));
+__export(require("./sessions/secureget"));
+__export(require("./users/users"));
 var WSAuth_1 = require("./database/models/WSAuth");
 exports.WebSocketAuth = WSAuth_1.WebSocketAuth;
-var wsauth_1 = require("./wsauth/wsauth");
-exports.checkWSAuthToken = wsauth_1.checkWSAuthToken;
-exports.authenticateWS = wsauth_1.authenticateWS;
-exports.checkConnectionAuth = wsauth_1.checkConnectionAuth;
+__export(require("./wsauth/wsauth"));
 var random_1 = require("./utils/string/random");
 exports.randomString = random_1.randomString;
 var response_1 = require("./utils/response");

@@ -12,7 +12,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const database_1 = require("./../database/database");
 const User_1 = require("./../database/models/User");
 const password_1 = require("./password");
+const config_1 = require("../auth/config");
+const secureget_1 = require("../sessions/secureget");
 User_1.User.init(database_1.dataBase);
+function getUserSessionData(req) {
+    return secureget_1.getSessionValue(req, config_1.SESSION_LOGGED_DATA);
+}
+exports.getUserSessionData = getUserSessionData;
 function getUserById(id) {
     return __awaiter(this, void 0, void 0, function* () {
         let result = yield User_1.User.findOne({ where: { id: id.toString() } });

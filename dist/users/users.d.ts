@@ -1,4 +1,5 @@
 import { UserCreateInterface } from "./types";
+export declare function getUserSessionData(req: any): string;
 export declare function getUserById(id: Number): Promise<any>;
 export declare function getUserByEmail(email: string): Promise<any>;
 export declare function getUserIdByUserEmail(email: string): Promise<number>;

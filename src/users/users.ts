@@ -2,7 +2,13 @@ import {dataBase} from "./../database/database";
 import { User } from "./../database/models/User";
 import { createArgon2Hash,checkArgon2Password } from "./password";
 import {UserCreateInterface} from "./types";
+import {SESSION_LOGGED_DATA} from "../auth/config";
+import {getSessionValue} from "../sessions/secureget";
 User.init(dataBase);
+
+export function getUserSessionData(req:any):string{
+   return getSessionValue(req,SESSION_LOGGED_DATA);
+}
 export async function getUserById(id:Number){
      let result=await User.findOne({where:{id:id.toString()}});
      return (result);
