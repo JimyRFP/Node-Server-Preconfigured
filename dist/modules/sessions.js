@@ -3,11 +3,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.initSessions = void 0;
 const express_session_1 = __importDefault(require("express-session"));
 const env_1 = __importDefault(require("../settings/env"));
 function initSessions(app) {
     app.set('trust proxy', 1); // trust first proxy
-    app.use(express_session_1.default({
+    app.use((0, express_session_1.default)({
         secret: 'keyboard cat',
         resave: false,
         saveUninitialized: true,

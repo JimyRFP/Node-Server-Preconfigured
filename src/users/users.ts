@@ -69,7 +69,7 @@ export async function checkUserPassword(email:string,password_string:string):Pro
     try{
          user=await getUserByEmail(email);
     }catch(e){
-         return false;
+         throw e;
     }
     if(!user)
       return false;

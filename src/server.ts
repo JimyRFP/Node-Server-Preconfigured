@@ -9,4 +9,5 @@ export * from "./wsauth/wsauth";
 export { randomString } from "./utils/string/random";
 export { JSONResponse } from "./utils/response";
 import ExpressServer from "./expressServer";
+export * from "./middlewares/auth";
 export default ExpressServer;

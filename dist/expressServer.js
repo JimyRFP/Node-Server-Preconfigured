@@ -15,7 +15,7 @@ class ExpressServer {
         this.authBaseUrl = "";
         this.wsAuthBaseUrl = "";
         this.usePort = env_1.default.PORT;
-        this.app = express_1.default();
+        this.app = (0, express_1.default)();
         this.initModules();
     }
     listen(port = null) {
@@ -24,9 +24,9 @@ class ExpressServer {
         this.app.listen(this.usePort);
     }
     initModules() {
-        sessions_1.initSessions(this.app);
-        postreader_1.initPostReader(this.app);
-        initcors_1.initCors(this.app);
+        (0, sessions_1.initSessions)(this.app);
+        (0, postreader_1.initPostReader)(this.app);
+        (0, initcors_1.initCors)(this.app);
     }
     initAuthSystem(baseUrl = '/user') {
         this.authBaseUrl = baseUrl;

@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.checkConnectionAuth = exports.authenticateWS = exports.checkWSAuthToken = exports.setWSAuthDataNewToken = exports.getWSAuthDataByUserId = void 0;
 const server_1 = require("../server");
 const server_2 = require("../server");
 const random_1 = require("./../utils/string/random");
@@ -29,7 +30,7 @@ function setWSAuthDataNewToken(userId, expiration_hours = 72) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             let ws = yield getWSAuthDataByUserId(userId);
-            let token = random_1.randomString(50);
+            let token = (0, random_1.randomString)(50);
             let expiration = new Date();
             expiration.setTime(expiration.getTime() + expiration_hours * 60 * 60 * 1000);
             if (!Boolean(ws)) {

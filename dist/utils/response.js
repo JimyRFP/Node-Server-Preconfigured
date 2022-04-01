@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.JSONResponse = void 0;
 function JSONResponse(is_ok, error_code = 0, error_message = '', data = {}) {
     const ret_data = {
         is_ok: is_ok,

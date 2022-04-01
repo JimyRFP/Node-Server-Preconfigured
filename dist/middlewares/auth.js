@@ -12,30 +12,29 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.checkArgon2Password = exports.createArgon2Hash = void 0;
-const argon2_1 = __importDefault(require("argon2"));
-function createArgon2Hash(password_string) {
+exports.setUserDataMiddleware = void 0;
+const server_1 = require("../server");
+const server_2 = require("../server");
+const server_3 = require("../server");
+const server_4 = require("../server");
+const env_1 = __importDefault(require("../settings/env"));
+const DEBUG = env_1.default.NODE_ENV === 'development' ? true : false;
+function setUserDataMiddleware(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
+        if (!(0, server_1.userIsLogged)(req))
+            return res.send((0, server_2.JSONResponse)(false, undefined, "User Must Be Logged"));
         try {
-            let hash = yield argon2_1.default.hash(password_string);
-            return hash;
+            const dealerEmail = (0, server_3.getUserSessionData)(req);
+            const dealerId = yield (0, server_4.getUserIdByUserEmail)(dealerEmail);
+            req.user = { email: dealerEmail, id: dealerId };
+            next();
         }
         catch (e) {
-            return false;
+            let more = null;
+            if (DEBUG)
+                more = e;
+            return res.send((0, server_2.JSONResponse)(false, undefined, "Get dealer data error", more));
         }
     });
 }
-exports.createArgon2Hash = createArgon2Hash;
-function checkArgon2Password(password_hash, password_string) {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            if (yield argon2_1.default.verify(password_hash, password_string))
-                return "Match";
-            return "Dont Match";
-        }
-        catch (e) {
-            return "Dont Match";
-        }
-    });
-}
-exports.checkArgon2Password = checkArgon2Password;
+exports.setUserDataMiddleware = setUserDataMiddleware;

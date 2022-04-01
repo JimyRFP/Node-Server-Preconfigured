@@ -6,10 +6,13 @@ import { userIsLogged } from "../auth/auth";
 import meta_sanitizer from 'meta-sanitizer';
 import { checkUserPassword } from "../users/users";
 import { createUser } from "../users/users";
+import ENV from "../settings/env";
+const DEBUG=ENV.NODE_ENV==='development'?true:false;
 enum LoginErrorCode{
     NoError=0,
     InvalidParams,
     InvalidPassword,
+    InternalError,
 
 }
 enum RegisterUserErrorCode{
@@ -38,12 +41,20 @@ router.post('/login',async (req,res)=>{
     }
     if(password==""||email=="")
       return res.send(JSONResponse(false,LoginErrorCode.InvalidParams,"Must have 'email' and 'password' params"));
-    const checkPass=await checkUserPassword(email,password);
-    if(checkPass){
-       setSessionValue(req,SESSION_LOGGED_DATA,email);
-       return res.send(JSONResponse(true,LoginErrorCode.NoError,"Login Ok"));
-    }
-    return res.send(JSONResponse(false,LoginErrorCode.InvalidPassword,"Invalid Password"));
+    try{
+      const checkPass=await checkUserPassword(email,password);
+      if(checkPass){
+         setSessionValue(req,SESSION_LOGGED_DATA,email);
+         return res.send(JSONResponse(true,LoginErrorCode.NoError,"Login Ok"));
+      }
+      return res.send(JSONResponse(false,LoginErrorCode.InvalidPassword,"Invalid Password"));
+    }catch(e){
+      let more=null;
+      if(DEBUG)
+        more=e;
+      return res.send(JSONResponse(false,LoginErrorCode.InternalError,"I-Error",more));
+    }  
+    
 });
 router.post('/register',async (req,res)=>{
     try{
