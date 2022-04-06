@@ -22,6 +22,6 @@ router.post('/gettoken',setUserDataMiddleware,async (req:any,res:any)=>{
       let more=null;
       if(DEBUG)
          more=e;
-      return res.send(JSONResponse(false,GenerateTokenError.InternalError,"I-Error",more));
+      return res.status(500).send(JSONResponse(false,GenerateTokenError.InternalError,"I-Error",more));
    }
 });

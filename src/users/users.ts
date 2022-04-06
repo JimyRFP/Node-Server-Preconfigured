@@ -9,12 +9,12 @@ User.init(dataBase);
 export function getUserSessionData(req:any):string{
    return getSessionValue(req,SESSION_LOGGED_DATA);
 }
-export async function getUserById(id:Number){
+export async function getUserById(id:Number):Promise<any>{
      let result=await User.findOne({where:{id:id.toString()}});
      return (result);
 }
 
-export async function getUserByEmail(email:string){
+export async function getUserByEmail(email:string):Promise<any>{
      let result=await User.findOne({where:{email:email}});
      return (result);
 }
@@ -29,11 +29,11 @@ export async function getUserIdByUserEmail(email:string):Promise<number>{
      }
 }
 
-export async function deleteUserById(id:Number){
+export async function deleteUserById(id:Number):Promise<any>{
      let result=await User.destroy({where:{id:id.toString()}});
      return result;
 }
-export async function isUserExist(email:string) {
+export async function isUserExist(email:string):Promise<boolean>{
      try{
           let user=await getUserByEmail(email);
           return Boolean(user);
@@ -42,7 +42,7 @@ export async function isUserExist(email:string) {
      }     
 }
 
-export async function createUser(data:UserCreateInterface){
+export async function createUser(data:UserCreateInterface):Promise<any>{
      let user_exist=false;
      try{
           user_exist=await isUserExist(data.email);

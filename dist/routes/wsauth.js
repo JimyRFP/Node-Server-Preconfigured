@@ -40,6 +40,6 @@ exports.router.post('/gettoken', auth_1.setUserDataMiddleware, (req, res) => __a
         let more = null;
         if (DEBUG)
             more = e;
-        return res.send((0, response_1.JSONResponse)(false, GenerateTokenError.InternalError, "I-Error", more));
+        return res.status(500).send((0, response_1.JSONResponse)(false, GenerateTokenError.InternalError, "I-Error", more));
     }
 }));

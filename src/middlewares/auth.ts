@@ -6,7 +6,7 @@ import ENV from "../settings/env";
 const DEBUG=ENV.NODE_ENV==='development'?true:false;
 export async function setUserDataMiddleware(req:any,res:any,next:any){
     if(!userIsLogged(req))
-      return res.send(JSONResponse(false,undefined,"User Must Be Logged"));
+      return res.status(401).send(JSONResponse(false,undefined,"User Must Be Logged"));
     try{
         const dealerEmail=getUserSessionData(req);
         const dealerId=await getUserIdByUserEmail(dealerEmail);
@@ -16,6 +16,6 @@ export async function setUserDataMiddleware(req:any,res:any,next:any){
        let more=null;
        if(DEBUG)
          more=e;  
-       return res.send(JSONResponse(false,undefined,"Get dealer data error",more));
+       return res.status(500).send(JSONResponse(false,undefined,"Get dealer data error",more));
      }  
 }

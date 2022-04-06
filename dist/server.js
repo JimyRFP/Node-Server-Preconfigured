@@ -36,4 +36,5 @@ var response_1 = require("./utils/response");
 Object.defineProperty(exports, "JSONResponse", { enumerable: true, get: function () { return response_1.JSONResponse; } });
 const expressServer_1 = __importDefault(require("./expressServer"));
 __exportStar(require("./middlewares/auth"), exports);
+__exportStar(require("./middlewares/wsauth"), exports);
 exports.default = expressServer_1.default;

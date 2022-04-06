@@ -22,7 +22,7 @@ const DEBUG = env_1.default.NODE_ENV === 'development' ? true : false;
 function setUserDataMiddleware(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         if (!(0, server_1.userIsLogged)(req))
-            return res.send((0, server_2.JSONResponse)(false, undefined, "User Must Be Logged"));
+            return res.status(401).send((0, server_2.JSONResponse)(false, undefined, "User Must Be Logged"));
         try {
             const dealerEmail = (0, server_3.getUserSessionData)(req);
             const dealerId = yield (0, server_4.getUserIdByUserEmail)(dealerEmail);
@@ -33,7 +33,7 @@ function setUserDataMiddleware(req, res, next) {
             let more = null;
             if (DEBUG)
                 more = e;
-            return res.send((0, server_2.JSONResponse)(false, undefined, "Get dealer data error", more));
+            return res.status(500).send((0, server_2.JSONResponse)(false, undefined, "Get dealer data error", more));
         }
     });
 }
