@@ -4,7 +4,7 @@ import { WSResponse } from "../utils/response";
 import { authenticateWS } from "../server";
 import meta_sanitizer from "meta-sanitizer";
 const DEBUG=true;
-async function checkWSAuth(ws:any,msg:any):Promise<boolean>{
+export async function checkWSAuth(ws:any,msg:any):Promise<boolean>{
     try{
         if(ws.userId && ws.connectionToken){
             if((await checkConnectionAuth(ws.userId,ws.connectionToken)))

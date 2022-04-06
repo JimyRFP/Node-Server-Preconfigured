@@ -12,6 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.checkWSAuth = void 0;
 const random_1 = require("../utils/string/random");
 const wsauth_1 = require("../wsauth/wsauth");
 const response_1 = require("../utils/response");
@@ -52,3 +53,4 @@ function checkWSAuth(ws, msg) {
         }
     });
 }
+exports.checkWSAuth = checkWSAuth;
