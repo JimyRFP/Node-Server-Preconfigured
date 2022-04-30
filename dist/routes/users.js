@@ -20,6 +20,7 @@ const auth_1 = require("../auth/auth");
 const meta_sanitizer_1 = __importDefault(require("meta-sanitizer"));
 const users_1 = require("../users/users");
 const users_2 = require("../users/users");
+const auth_2 = require("../middlewares/auth");
 const env_1 = __importDefault(require("../settings/env"));
 const DEBUG = env_1.default.NODE_ENV === 'development' ? true : false;
 var LoginErrorCode;
@@ -87,5 +88,8 @@ router.post('/register', (req, res) => __awaiter(void 0, void 0, void 0, functio
             return res.send((0, response_1.JSONResponse)(false, RegisterUserErrorCode.UserExist, "User Exist"));
         return res.send((0, response_1.JSONResponse)(false, RegisterUserErrorCode.InternalError, "I-Error"));
     }
+}));
+router.post('/getuser', auth_2.setUserDataMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    res.send((0, response_1.JSONResponse)(true, 0, "", { email: req.user.email, id: req.user.id }));
 }));
 exports.default = router;

@@ -6,7 +6,9 @@ import { userIsLogged } from "../auth/auth";
 import meta_sanitizer from 'meta-sanitizer';
 import { checkUserPassword } from "../users/users";
 import { createUser } from "../users/users";
+import { setUserDataMiddleware } from "../middlewares/auth";
 import ENV from "../settings/env";
+
 const DEBUG=ENV.NODE_ENV==='development'?true:false;
 enum LoginErrorCode{
     NoError=0,
@@ -72,4 +74,7 @@ router.post('/register',async (req,res)=>{
     }
 });
 
+router.post('/getuser',setUserDataMiddleware,async (req:any,res)=>{
+    res.send(JSONResponse(true,0,"",{email:req.user.email,id:req.user.id}));
+});
 export default router;
