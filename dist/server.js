@@ -17,7 +17,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.JSONResponse = exports.randomString = exports.WebSocketAuth = exports.dataBase = exports.User = void 0;
+exports.debugMessage = exports.JSONResponse = exports.randomString = exports.WebSocketAuth = exports.dataBase = exports.User = void 0;
 __exportStar(require("./auth/auth"), exports);
 ;
 var User_1 = require("./database/models/User");
@@ -35,6 +35,8 @@ Object.defineProperty(exports, "randomString", { enumerable: true, get: function
 var response_1 = require("./utils/response");
 Object.defineProperty(exports, "JSONResponse", { enumerable: true, get: function () { return response_1.JSONResponse; } });
 const expressServer_1 = __importDefault(require("./expressServer"));
+var debug_1 = require("./utils/debug/debug");
+Object.defineProperty(exports, "debugMessage", { enumerable: true, get: function () { return debug_1.debugMessage; } });
 __exportStar(require("./middlewares/auth"), exports);
 __exportStar(require("./middlewares/wsauth"), exports);
 exports.default = expressServer_1.default;
