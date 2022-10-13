@@ -9,5 +9,6 @@ declare const ENV: {
         username: string;
         password: string;
     };
+    SESSION_SECRET: string;
 };
 export default ENV;

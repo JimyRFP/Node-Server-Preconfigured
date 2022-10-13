@@ -9,7 +9,7 @@ const env_1 = __importDefault(require("../settings/env"));
 function initSessions(app) {
     app.set('trust proxy', 1); // trust first proxy
     app.use((0, express_session_1.default)({
-        secret: 'keyboard cat',
+        secret: env_1.default.SESSION_SECRET,
         resave: false,
         saveUninitialized: true,
         cookie: { secure: env_1.default.NODE_ENV == 'development' ? false : true,

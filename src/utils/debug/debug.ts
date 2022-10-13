@@ -7,6 +7,6 @@ export function debugMessage(isDebug:boolean,message:string,data:any={}){
     console.log("----DEBUG----"+
                 "\nCaller: "+stack[2]+
                 "\nMessage: "+message+
-                addData?"\naddData: "+addData:""
+                (addData?"\naddData: "+addData:"")
                 );
 } 

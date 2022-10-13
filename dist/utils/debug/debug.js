@@ -10,6 +10,6 @@ function debugMessage(isDebug, message, data = {}) {
     console.log("----DEBUG----" +
         "\nCaller: " + stack[2] +
         "\nMessage: " + message +
-        addData ? "\naddData: " + addData : "");
+        (addData ? "\naddData: " + addData : ""));
 }
 exports.debugMessage = debugMessage;

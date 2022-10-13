@@ -8,6 +8,7 @@ const ENV={
         database:process.env.DATABASE_DATABASE?process.env.DATABASE_DATABASE:'postgres',
         username:process.env.DATABASE_USERNAME?process.env.DATABASE_USERNAME:'postgres',
         password:process.env.DATABASE_PASSWORD?process.env.DATABASE_PASSWORD:'',
-    }
+    },
+    SESSION_SECRET:process.env.SESSION_SECRET?process.env.SESSION_SECRET:"secret key session",
 };
 export default ENV;

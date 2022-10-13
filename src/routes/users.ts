@@ -43,6 +43,7 @@ router.post('/login',async (req,res)=>{
     }
     if(password==""||email=="")
       return res.send(JSONResponse(false,LoginErrorCode.InvalidParams,"Must have 'email' and 'password' params"));
+    email=email.toLocaleLowerCase();
     try{
       const checkPass=await checkUserPassword(email,password);
       if(checkPass){
@@ -65,6 +66,7 @@ router.post('/register',async (req,res)=>{
       let name=meta_sanitizer.SanitizerEngine(req.body.name||'',true,false,[' ']).sanitizedData;
       if(email=="" || password=="" || name=="")
         return res.send(JSONResponse(false,RegisterUserErrorCode.InvalidParams,"Invalid params"));
+      email=email.toLocaleLowerCase();  
       await createUser({first_name:name,email:email,password_string:password});
       return res.send(JSONResponse(true,RegisterUserErrorCode.NoError,"","REGISTER OK"));
     }catch(e){
