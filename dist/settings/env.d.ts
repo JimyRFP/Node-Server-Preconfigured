@@ -5,7 +5,7 @@ declare const ENV: {
     DATABASE: {
         dialect: string;
         host: string;
-        database: string;
+        database: any;
         username: string;
         password: string;
     };
