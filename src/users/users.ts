@@ -64,6 +64,22 @@ export async function createUser(data:UserCreateInterface):Promise<any>{
      }
 }
 
+export async function changeUserPassword(email:string,password:string){
+     try{
+          let user=await User.findOne({where:{email}});
+          if(!user)   
+             throw "Unknwon User";
+          let hash=await createArgon2Hash(password);
+          if(!hash)
+            "Create Hash Error";
+          user.password_hash=hash;
+          await user.save();
+          return user;     
+     }catch(e){
+         throw e;
+     }
+}
+
 export async function checkUserPassword(email:string,password_string:string):Promise<boolean>{
     let user;
     try{

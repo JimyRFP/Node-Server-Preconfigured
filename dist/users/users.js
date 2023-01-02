@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.checkUserPassword = exports.createUser = exports.isUserExist = exports.deleteUserById = exports.getUserIdByUserEmail = exports.getUserByEmail = exports.getUserById = exports.getUserSessionData = void 0;
+exports.checkUserPassword = exports.changeUserPassword = exports.createUser = exports.isUserExist = exports.deleteUserById = exports.getUserIdByUserEmail = exports.getUserByEmail = exports.getUserById = exports.getUserSessionData = void 0;
 const database_1 = require("./../database/database");
 const User_1 = require("./../database/models/User");
 const password_1 = require("./password");
@@ -93,6 +93,25 @@ function createUser(data) {
     });
 }
 exports.createUser = createUser;
+function changeUserPassword(email, password) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            let user = yield User_1.User.findOne({ where: { email } });
+            if (!user)
+                throw "Unknwon User";
+            let hash = yield (0, password_1.createArgon2Hash)(password);
+            if (!hash)
+                "Create Hash Error";
+            user.password_hash = hash;
+            yield user.save();
+            return user;
+        }
+        catch (e) {
+            throw e;
+        }
+    });
+}
+exports.changeUserPassword = changeUserPassword;
 function checkUserPassword(email, password_string) {
     return __awaiter(this, void 0, void 0, function* () {
         let user;
