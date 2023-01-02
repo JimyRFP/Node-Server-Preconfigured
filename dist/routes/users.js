@@ -13,8 +13,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const secureset_1 = require("../sessions/secureset");
-const config_1 = require("../auth/config");
 const response_1 = require("../utils/response");
 const auth_1 = require("../auth/auth");
 const meta_sanitizer_1 = __importDefault(require("meta-sanitizer"));
@@ -22,6 +20,8 @@ const users_1 = require("../users/users");
 const users_2 = require("../users/users");
 const auth_2 = require("../middlewares/auth");
 const env_1 = __importDefault(require("../settings/env"));
+const auth_3 = require("../auth/auth");
+const auth_4 = require("../auth/auth");
 const DEBUG = env_1.default.NODE_ENV === 'development' ? true : false;
 var LoginErrorCode;
 (function (LoginErrorCode) {
@@ -41,7 +41,7 @@ const router = express_1.default.Router();
 router.post('/logout', (req, res) => {
     let is_ok = false;
     if ((0, auth_1.userIsLogged)(req)) {
-        (0, secureset_1.deleteSessionValue)(req, config_1.SESSION_LOGGED_DATA);
+        (0, auth_4.logoutUser)(req);
         is_ok = true;
     }
     res.send((0, response_1.JSONResponse)(is_ok, 0, is_ok ? "" : "User Must be logged", {}));
@@ -62,7 +62,7 @@ router.post('/login', (req, res) => __awaiter(void 0, void 0, void 0, function* 
     try {
         const checkPass = yield (0, users_1.checkUserPassword)(email, password);
         if (checkPass) {
-            (0, secureset_1.setSessionValue)(req, config_1.SESSION_LOGGED_DATA, email);
+            (0, auth_3.setUserLogged)(req, email);
             return res.send((0, response_1.JSONResponse)(true, LoginErrorCode.NoError, "Login Ok"));
         }
         return res.send((0, response_1.JSONResponse)(false, LoginErrorCode.InvalidPassword, "Invalid Password"));

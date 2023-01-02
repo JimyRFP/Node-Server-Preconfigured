@@ -8,6 +8,8 @@ import { checkUserPassword } from "../users/users";
 import { createUser } from "../users/users";
 import { setUserDataMiddleware } from "../middlewares/auth";
 import ENV from "../settings/env";
+import { setUserLogged } from "../auth/auth";
+import { logoutUser } from "../auth/auth";
 
 const DEBUG=ENV.NODE_ENV==='development'?true:false;
 enum LoginErrorCode{
@@ -27,7 +29,7 @@ const router=express.Router();
 router.post('/logout',(req,res)=>{
    let is_ok=false;
    if(userIsLogged(req)){
-       deleteSessionValue(req,SESSION_LOGGED_DATA);
+       logoutUser(req)
        is_ok=true;
    }
    res.send(JSONResponse(is_ok,0,is_ok?"":"User Must be logged",{}));
@@ -47,7 +49,7 @@ router.post('/login',async (req,res)=>{
     try{
       const checkPass=await checkUserPassword(email,password);
       if(checkPass){
-         setSessionValue(req,SESSION_LOGGED_DATA,email);
+         setUserLogged(req,email);
          return res.send(JSONResponse(true,LoginErrorCode.NoError,"Login Ok"));
       }
       return res.send(JSONResponse(false,LoginErrorCode.InvalidPassword,"Invalid Password"));
