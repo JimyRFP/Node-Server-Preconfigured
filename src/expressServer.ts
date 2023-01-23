@@ -1,14 +1,17 @@
 import express from "express";
+import { Express } from "express";
 import { initSessions } from "./modules/sessions";
 import { initPostReader } from "./modules/postreader";
 import { initCors } from "./modules/initcors";
 import  ENV  from "./settings/env";
 import authRouter from "./routes/users";
 import { router as wsAuthRoter } from "./routes/wsauth";
+import { Server } from "http";
 export default class ExpressServer{
-    app:any;
+    app:Express;
     authBaseUrl:string;
     usePort:number;
+    server?:Server;
     wsAuthBaseUrl:string;
     constructor(){
        this.authBaseUrl="";
@@ -20,7 +23,7 @@ export default class ExpressServer{
     listen(port:any=null){
        if(port!=null)
           this.usePort=parseInt(port);
-       this.app.listen(this.usePort);  
+       this.server=this.app.listen(this.usePort);  
     }
 
     initModules(){
@@ -39,5 +42,8 @@ export default class ExpressServer{
 
     getApp(){
       return this.app;
+    }
+    getServer(){
+      return this.server;
     }
 }

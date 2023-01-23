@@ -21,7 +21,7 @@ class ExpressServer {
     listen(port = null) {
         if (port != null)
             this.usePort = parseInt(port);
-        this.app.listen(this.usePort);
+        this.server = this.app.listen(this.usePort);
     }
     initModules() {
         (0, sessions_1.initSessions)(this.app);
@@ -38,6 +38,9 @@ class ExpressServer {
     }
     getApp() {
         return this.app;
+    }
+    getServer() {
+        return this.server;
     }
 }
 exports.default = ExpressServer;
