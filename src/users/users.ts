@@ -64,7 +64,7 @@ export async function createUser(data:UserCreateInterface):Promise<any>{
      }
 }
 
-export async function changeUserPassword(email:string,password:string){
+export async function changeUserPassword(email:string,password:string):Promise<User>{
      try{
           let user=await User.findOne({where:{email}});
           if(!user)   
