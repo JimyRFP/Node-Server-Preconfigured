@@ -54,24 +54,24 @@ router.post('/login', (req, res) => __awaiter(void 0, void 0, void 0, function* 
         password = meta_sanitizer_1.default.queryProtector(req.body.password);
     }
     catch (e) {
-        return res.send((0, response_1.JSONResponse)(false, LoginErrorCode.InvalidParams, "Must have 'email' and 'password' params"));
+        return res.status(403).send((0, response_1.JSONResponse)(false, LoginErrorCode.InvalidParams, "Must have 'email' and 'password' params"));
     }
     if (password == "" || email == "")
-        return res.send((0, response_1.JSONResponse)(false, LoginErrorCode.InvalidParams, "Must have 'email' and 'password' params"));
+        return res.status(403).send((0, response_1.JSONResponse)(false, LoginErrorCode.InvalidParams, "Must have 'email' and 'password' params"));
     email = email.toLocaleLowerCase();
     try {
         const checkPass = yield (0, users_1.checkUserPassword)(email, password);
         if (checkPass) {
             (0, auth_3.setUserLogged)(req, email);
-            return res.send((0, response_1.JSONResponse)(true, LoginErrorCode.NoError, "Login Ok"));
+            return res.status(200).send((0, response_1.JSONResponse)(true, LoginErrorCode.NoError, "Login Ok"));
         }
-        return res.send((0, response_1.JSONResponse)(false, LoginErrorCode.InvalidPassword, "Invalid Password"));
+        return res.status(403).send((0, response_1.JSONResponse)(false, LoginErrorCode.InvalidPassword, "Invalid Password"));
     }
     catch (e) {
         let more = null;
         if (DEBUG)
             more = e;
-        return res.send((0, response_1.JSONResponse)(false, LoginErrorCode.InternalError, "I-Error", more));
+        return res.status(500).send((0, response_1.JSONResponse)(false, LoginErrorCode.InternalError, "I-Error", more));
     }
 }));
 router.post('/register', (req, res) => __awaiter(void 0, void 0, void 0, function* () {

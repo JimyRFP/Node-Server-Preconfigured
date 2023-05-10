@@ -41,23 +41,23 @@ router.post('/login',async (req,res)=>{
       email=meta_sanitizer.sanitizeEmail(req.body.email);
       password=meta_sanitizer.queryProtector(req.body.password);
     }catch(e){
-      return res.send(JSONResponse(false,LoginErrorCode.InvalidParams,"Must have 'email' and 'password' params"))
+      return res.status(403).send(JSONResponse(false,LoginErrorCode.InvalidParams,"Must have 'email' and 'password' params"))
     }
     if(password==""||email=="")
-      return res.send(JSONResponse(false,LoginErrorCode.InvalidParams,"Must have 'email' and 'password' params"));
+      return res.status(403).send(JSONResponse(false,LoginErrorCode.InvalidParams,"Must have 'email' and 'password' params"));
     email=email.toLocaleLowerCase();
     try{
       const checkPass=await checkUserPassword(email,password);
       if(checkPass){
          setUserLogged(req,email);
-         return res.send(JSONResponse(true,LoginErrorCode.NoError,"Login Ok"));
+         return res.status(200).send(JSONResponse(true,LoginErrorCode.NoError,"Login Ok"));
       }
-      return res.send(JSONResponse(false,LoginErrorCode.InvalidPassword,"Invalid Password"));
+      return res.status(403).send(JSONResponse(false,LoginErrorCode.InvalidPassword,"Invalid Password"));
     }catch(e){
       let more=null;
       if(DEBUG)
         more=e;
-      return res.send(JSONResponse(false,LoginErrorCode.InternalError,"I-Error",more));
+      return res.status(500).send(JSONResponse(false,LoginErrorCode.InternalError,"I-Error",more));
     }  
     
 });
