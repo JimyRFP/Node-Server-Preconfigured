@@ -22,6 +22,7 @@ const auth_2 = require("../middlewares/auth");
 const env_1 = __importDefault(require("../settings/env"));
 const auth_3 = require("../auth/auth");
 const auth_4 = require("../auth/auth");
+const server_1 = require("../server");
 const DEBUG = env_1.default.NODE_ENV === 'development' ? true : false;
 var LoginErrorCode;
 (function (LoginErrorCode) {
@@ -62,6 +63,13 @@ router.post('/login', (req, res) => __awaiter(void 0, void 0, void 0, function* 
     try {
         const checkPass = yield (0, users_1.checkUserPassword)(email, password);
         if (checkPass) {
+            const user = yield server_1.User.findOne({ where: { email: email } });
+            if (!user) {
+                return res.status(500).send((0, response_1.JSONResponse)(false, 0, "I_E"));
+            }
+            if (!user.is_active) {
+                return res.status(400).send((0, response_1.JSONResponse)(false, 0, "User deleted"));
+            }
             (0, auth_3.setUserLogged)(req, email);
             return res.status(200).send((0, response_1.JSONResponse)(true, LoginErrorCode.NoError, "Login Ok"));
         }

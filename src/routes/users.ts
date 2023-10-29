@@ -10,6 +10,7 @@ import { setUserDataMiddleware } from "../middlewares/auth";
 import ENV from "../settings/env";
 import { setUserLogged } from "../auth/auth";
 import { logoutUser } from "../auth/auth";
+import { User } from "../server";
 
 const DEBUG=ENV.NODE_ENV==='development'?true:false;
 enum LoginErrorCode{
@@ -49,6 +50,13 @@ router.post('/login',async (req,res)=>{
     try{
       const checkPass=await checkUserPassword(email,password);
       if(checkPass){
+         const user:User=await User.findOne({where:{email:email}});
+         if(!user){
+            return res.status(500).send(JSONResponse(false,0,"I_E"));
+         }
+         if(!user.is_active){
+             return res.status(400).send(JSONResponse(false,0,"User deleted"));
+         }
          setUserLogged(req,email);
          return res.status(200).send(JSONResponse(true,LoginErrorCode.NoError,"Login Ok"));
       }
