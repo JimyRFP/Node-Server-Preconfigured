@@ -6,6 +6,16 @@ import {SESSION_LOGGED_DATA} from "../auth/config";
 import {getSessionValue} from "../sessions/secureget";
 User.init(dataBase);
 
+export async function updateUserLastAction(user:User){
+     try{
+         user.last_action=new Date();
+         await user.save();
+         return user;
+     }catch(e){
+          throw e;
+     }
+}
+
 export function getUserSessionData(req:any):string{
    return getSessionValue(req,SESSION_LOGGED_DATA);
 }

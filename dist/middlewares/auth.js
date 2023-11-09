@@ -16,7 +16,6 @@ exports.setUserDataMiddleware = void 0;
 const server_1 = require("../server");
 const server_2 = require("../server");
 const server_3 = require("../server");
-const server_4 = require("../server");
 const env_1 = __importDefault(require("../settings/env"));
 const DEBUG = env_1.default.NODE_ENV === 'development' ? true : false;
 function setUserDataMiddleware(req, res, next) {
@@ -25,8 +24,11 @@ function setUserDataMiddleware(req, res, next) {
             return res.status(401).send((0, server_2.JSONResponse)(false, undefined, "User Must Be Logged"));
         try {
             const dealerEmail = (0, server_3.getUserSessionData)(req);
-            const dealerId = yield (0, server_4.getUserIdByUserEmail)(dealerEmail);
-            req.user = { email: dealerEmail, id: dealerId };
+            const user = yield server_1.User.findOne({ where: { email: dealerEmail, is_active: true } });
+            if (!user)
+                throw "Unknown user";
+            req.user = { email: dealerEmail, id: user.id };
+            yield (0, server_1.updateUserLastAction)(user);
             next();
         }
         catch (e) {

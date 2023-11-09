@@ -9,13 +9,26 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.checkUserPassword = exports.changeUserPassword = exports.createUser = exports.isUserExist = exports.deleteUserById = exports.getUserIdByUserEmail = exports.getUserByEmail = exports.getUserById = exports.getUserSessionData = void 0;
+exports.checkUserPassword = exports.changeUserPassword = exports.createUser = exports.isUserExist = exports.deleteUserById = exports.getUserIdByUserEmail = exports.getUserByEmail = exports.getUserById = exports.getUserSessionData = exports.updateUserLastAction = void 0;
 const database_1 = require("./../database/database");
 const User_1 = require("./../database/models/User");
 const password_1 = require("./password");
 const config_1 = require("../auth/config");
 const secureget_1 = require("../sessions/secureget");
 User_1.User.init(database_1.dataBase);
+function updateUserLastAction(user) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            user.last_action = new Date();
+            yield user.save();
+            return user;
+        }
+        catch (e) {
+            throw e;
+        }
+    });
+}
+exports.updateUserLastAction = updateUserLastAction;
 function getUserSessionData(req) {
     return (0, secureget_1.getSessionValue)(req, config_1.SESSION_LOGGED_DATA);
 }

@@ -1,10 +1,8 @@
 import  express  from "express";
-import { deleteSessionValue ,setSessionValue} from "../sessions/secureset";
-import { SESSION_LOGGED_DATA } from "../auth/config";
 import { JSONResponse } from "../utils/response";
 import { userIsLogged } from "../auth/auth";
 import meta_sanitizer from 'meta-sanitizer';
-import { checkUserPassword } from "../users/users";
+import { checkUserPassword, updateUserLastAction } from "../users/users";
 import { createUser } from "../users/users";
 import { setUserDataMiddleware } from "../middlewares/auth";
 import ENV from "../settings/env";
@@ -58,6 +56,7 @@ router.post('/login',async (req,res)=>{
              return res.status(400).send(JSONResponse(false,0,"User deleted"));
          }
          setUserLogged(req,email);
+         await updateUserLastAction(user)
          return res.status(200).send(JSONResponse(true,LoginErrorCode.NoError,"Login Ok"));
       }
       return res.status(403).send(JSONResponse(false,LoginErrorCode.InvalidPassword,"Invalid Password"));

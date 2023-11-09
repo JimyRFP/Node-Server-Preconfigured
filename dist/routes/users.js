@@ -71,6 +71,7 @@ router.post('/login', (req, res) => __awaiter(void 0, void 0, void 0, function* 
                 return res.status(400).send((0, response_1.JSONResponse)(false, 0, "User deleted"));
             }
             (0, auth_3.setUserLogged)(req, email);
+            yield (0, users_1.updateUserLastAction)(user);
             return res.status(200).send((0, response_1.JSONResponse)(true, LoginErrorCode.NoError, "Login Ok"));
         }
         return res.status(403).send((0, response_1.JSONResponse)(false, LoginErrorCode.InvalidPassword, "Invalid Password"));

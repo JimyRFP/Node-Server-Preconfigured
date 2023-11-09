@@ -10,6 +10,7 @@ class User extends sequelize_1.Model {
             email: sequelize_2.DataTypes.STRING,
             is_active: sequelize_2.DataTypes.BOOLEAN,
             password_hash: sequelize_2.DataTypes.STRING,
+            last_action: sequelize_2.DataTypes.DATE,
         }, {
             sequelize: sequelize,
             tableName: 'spc_users',
