@@ -1,11 +1,14 @@
-export function JSONResponse(is_ok:boolean,error_code:number=0,error_message:string='',data:any={}){
-    const ret_data={
-        is_ok:is_ok,
-        error_code:error_code,
-        error_message:error_message,
-        data:data,
-    };
-    return JSON.stringify(ret_data);
+export function JSONResponse(data:any,error?:any){
+    return JSON.stringify({
+        data,
+        hasError:Boolean(error),
+        error,
+    });
+};
+
+export function sendIError(req:any,res:any,error?:any){
+     console.log(error);
+     return res.status(500).send(JSONResponse("","I-E"));
 }
 export function WSResponse(isOK:boolean,message:string='',errorMessage:string="",data:any={}):string{
     return JSON.stringify({

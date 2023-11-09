@@ -3,10 +3,11 @@ import { JSONResponse } from "../server";
 import { getUserSessionData } from "../server";
 
 import ENV from "../settings/env";
+import { sendIError } from "../utils/response";
 const DEBUG=ENV.NODE_ENV==='development'?true:false;
 export async function setUserDataMiddleware(req:any,res:any,next:any){
     if(!userIsLogged(req))
-      return res.status(401).send(JSONResponse(false,undefined,"User Must Be Logged"));
+      return res.status(401).send(JSONResponse({},"User Must Be Logged"));
     try{
         const dealerEmail=getUserSessionData(req);
         const user=await User.findOne({where:{email:dealerEmail,is_active:true}});
@@ -16,9 +17,6 @@ export async function setUserDataMiddleware(req:any,res:any,next:any){
         await updateUserLastAction(user);
         next();
      }catch(e){
-       let more=null;
-       if(DEBUG)
-         more=e;  
-       return res.status(500).send(JSONResponse(false,undefined,"Get dealer data error",more));
+       return sendIError(req,res,e);
      }  
 }

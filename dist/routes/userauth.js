@@ -17,12 +17,10 @@ const response_1 = require("../utils/response");
 const auth_1 = require("../auth/auth");
 const meta_sanitizer_1 = __importDefault(require("meta-sanitizer"));
 const users_1 = require("../users/users");
-const users_2 = require("../users/users");
 const auth_2 = require("../middlewares/auth");
 const auth_3 = require("../auth/auth");
 const auth_4 = require("../auth/auth");
 const server_1 = require("../server");
-const email_1 = require("../utils/validators/email");
 const router = express_1.default.Router();
 router.post('/logout', (req, res) => {
     let is_ok = false;
@@ -61,26 +59,6 @@ router.post('/login', (req, res) => __awaiter(void 0, void 0, void 0, function* 
         return res.status(403).send((0, response_1.JSONResponse)({}, "Invalid Password"));
     }
     catch (e) {
-        return (0, response_1.sendIError)(req, res, e);
-    }
-}));
-router.post('/register', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        let email = meta_sanitizer_1.default.sanitizeEmail(req.body.email || '');
-        let password = meta_sanitizer_1.default.queryProtector(req.body.password || '');
-        let name = meta_sanitizer_1.default.SanitizerEngine(req.body.name || '', true, false, [' ']).sanitizedData;
-        if (email == "" || password == "" || name == "")
-            return res.send((0, response_1.JSONResponse)({}, "Invalid params"));
-        email = email.toLocaleLowerCase();
-        if (!(0, email_1.checkEmail)(email)) {
-            return res.status(403).send((0, response_1.JSONResponse)({}, "Invalid Email"));
-        }
-        yield (0, users_2.createUser)({ first_name: name, email: email, password_string: password });
-        return res.send((0, response_1.JSONResponse)("REGISTER OK"));
-    }
-    catch (e) {
-        if (e === "User exist")
-            return res.send((0, response_1.JSONResponse)({}, "User Exist"));
         return (0, response_1.sendIError)(req, res, e);
     }
 }));

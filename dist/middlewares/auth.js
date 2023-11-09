@@ -17,11 +17,12 @@ const server_1 = require("../server");
 const server_2 = require("../server");
 const server_3 = require("../server");
 const env_1 = __importDefault(require("../settings/env"));
+const response_1 = require("../utils/response");
 const DEBUG = env_1.default.NODE_ENV === 'development' ? true : false;
 function setUserDataMiddleware(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         if (!(0, server_1.userIsLogged)(req))
-            return res.status(401).send((0, server_2.JSONResponse)(false, undefined, "User Must Be Logged"));
+            return res.status(401).send((0, server_2.JSONResponse)({}, "User Must Be Logged"));
         try {
             const dealerEmail = (0, server_3.getUserSessionData)(req);
             const user = yield server_1.User.findOne({ where: { email: dealerEmail, is_active: true } });
@@ -32,10 +33,7 @@ function setUserDataMiddleware(req, res, next) {
             next();
         }
         catch (e) {
-            let more = null;
-            if (DEBUG)
-                more = e;
-            return res.status(500).send((0, server_2.JSONResponse)(false, undefined, "Get dealer data error", more));
+            return (0, response_1.sendIError)(req, res, e);
         }
     });
 }
