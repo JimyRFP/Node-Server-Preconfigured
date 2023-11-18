@@ -41,11 +41,22 @@ function stringfyError(err) {
     }
     return retData;
 }
+function getIpFromRequest(req) {
+    //@
+    let ips = (req.headers['cf-connecting-ip'] ||
+        req.headers['x-real-ip'] ||
+        req.headers['x-forwarded-for'] ||
+        req.ip || '');
+    if (typeof (ips) == 'string') {
+        ips = ips.split(',');
+    }
+    return ips[0].trim();
+}
 function saveInternalErrorLog(req, error, options) {
     var _a;
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const ip = req.ip;
+            const ip = getIpFromRequest(req);
             const url = req.originalUrl;
             //@ts-ignore
             const userId = (_a = req.user) === null || _a === void 0 ? void 0 : _a.id;

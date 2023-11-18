@@ -36,9 +36,22 @@ function stringfyError(err:any):string{
    }
    return retData;
 }
+function getIpFromRequest(req:Request){
+        //@
+        let ips = (
+            req.headers['cf-connecting-ip'] ||
+            req.headers['x-real-ip'] ||
+            req.headers['x-forwarded-for'] ||
+            req.ip || ''
+        );
+        if(typeof(ips)=='string'){
+            ips=ips.split(',');
+        }
+        return ips[0].trim();
+}
 export async function saveInternalErrorLog(req:Request,error:any,options?:{penTestSuspcion?:boolean,severity?:LogSeverity}){
      try{
-         const ip=req.ip;
+         const ip=getIpFromRequest(req);
          const url=req.originalUrl;
          //@ts-ignore
          const userId=req.user?.id;
