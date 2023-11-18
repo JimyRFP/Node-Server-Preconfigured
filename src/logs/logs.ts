@@ -39,7 +39,7 @@ function stringfyError(err:any):string{
 export async function saveInternalErrorLog(req:Request,error:any,options?:{penTestSuspcion?:boolean,severity?:LogSeverity}){
      try{
          const ip=req.ip;
-         const url=req.url;
+         const url=req.originalUrl;
          //@ts-ignore
          const userId=req.user?.id;
          let errorString=stringfyError(error);

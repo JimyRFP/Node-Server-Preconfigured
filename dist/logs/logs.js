@@ -46,7 +46,7 @@ function saveInternalErrorLog(req, error, options) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const ip = req.ip;
-            const url = req.url;
+            const url = req.originalUrl;
             //@ts-ignore
             const userId = (_a = req.user) === null || _a === void 0 ? void 0 : _a.id;
             let errorString = stringfyError(error);
