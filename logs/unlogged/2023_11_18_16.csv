@@ -1,4 +1,0 @@
-Data;Severidade;Usuário;Dados;IP;URL;Supeita de Ataque
-Sat Nov 18 2023 16:38:38 GMT-0300 (Horário Padrão de Brasília);info;Deslogado;Teste de error;::1;/teste;SIM
-Sat Nov 18 2023 16:39:14 GMT-0300 (Horário Padrão de Brasília);info;Deslogado;Teste de error;::1;/teste;SIM
-Sat Nov 18 2023 16:39:56 GMT-0300 (Horário Padrão de Brasília);danger;Deslogado;Teste de error;::1;/teste;SIM
