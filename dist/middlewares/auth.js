@@ -8,17 +8,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setUserDataMiddleware = void 0;
 const server_1 = require("../server");
 const server_2 = require("../server");
 const server_3 = require("../server");
-const env_1 = __importDefault(require("../settings/env"));
 const response_1 = require("../utils/response");
-const DEBUG = env_1.default.NODE_ENV === 'development' ? true : false;
 function setUserDataMiddleware(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         if (!(0, server_1.userIsLogged)(req))

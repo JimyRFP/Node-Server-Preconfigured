@@ -1,10 +1,8 @@
 import { User, updateUserLastAction, userIsLogged } from "../server";
 import { JSONResponse } from "../server";
 import { getUserSessionData } from "../server";
-
-import ENV from "../settings/env";
 import { sendIError } from "../utils/response";
-const DEBUG=ENV.NODE_ENV==='development'?true:false;
+
 export async function setUserDataMiddleware(req:any,res:any,next:any){
     if(!userIsLogged(req))
       return res.status(401).send(JSONResponse({},"User Must Be Logged"));
