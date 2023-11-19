@@ -10,11 +10,15 @@ export interface SaveLogOptions {
     userId?: number;
     data: string;
     severity: LogSeverity;
+    addPath?: string;
+    filePrefix?: string;
     penTestSuspcion?: boolean;
     req?: Request;
     ip?: string;
     url?: string;
 }
+export declare function stringfyError(err: any): string;
+export declare function getIpFromRequest(req: Request): string;
 export declare function saveInternalErrorLog(req: Request, error: any, options?: {
     penTestSuspcion?: boolean;
     severity?: LogSeverity;

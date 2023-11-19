@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.saveLog = exports.saveInternalErrorLog = exports.LogSeverity = exports.BASE_LOG_PATH = void 0;
+exports.saveLog = exports.saveInternalErrorLog = exports.getIpFromRequest = exports.stringfyError = exports.LogSeverity = exports.BASE_LOG_PATH = void 0;
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
 exports.BASE_LOG_PATH = './logs';
@@ -41,6 +41,7 @@ function stringfyError(err) {
     }
     return retData;
 }
+exports.stringfyError = stringfyError;
 function getIpFromRequest(req) {
     //@
     let ips = (req.headers['cf-connecting-ip'] ||
@@ -52,6 +53,7 @@ function getIpFromRequest(req) {
     }
     return ips[0].trim();
 }
+exports.getIpFromRequest = getIpFromRequest;
 function saveInternalErrorLog(req, error, options) {
     var _a;
     return __awaiter(this, void 0, void 0, function* () {
@@ -81,6 +83,12 @@ function saveLog(options) {
         fs_1.default.mkdirSync(exports.BASE_LOG_PATH);
     }
     let basePath = exports.BASE_LOG_PATH;
+    if (options.addPath) {
+        basePath = path_1.default.join(basePath, options.addPath);
+        if (!fs_1.default.existsSync(basePath)) {
+            fs_1.default.mkdirSync(basePath);
+        }
+    }
     if (options.userId) {
         basePath = path_1.default.join(basePath, options.userId.toString());
     }
@@ -90,7 +98,7 @@ function saveLog(options) {
     if (!fs_1.default.existsSync(basePath)) {
         fs_1.default.mkdirSync(basePath);
     }
-    let fileName = path_1.default.join(basePath, `${getDateString(new Date())}.csv`);
+    let fileName = path_1.default.join(basePath, `${options.filePrefix ? options.filePrefix + '_' : ""}${getDateString(new Date())}.csv`);
     let data = "";
     if (fs_1.default.existsSync(fileName)) {
         data = fs_1.default.readFileSync(fileName).toString() + "\n";

@@ -12,6 +12,8 @@ export interface SaveLogOptions{
     userId?:number;
     data:string;
     severity:LogSeverity;
+    addPath?:string;
+    filePrefix?:string;
     penTestSuspcion?:boolean;
     req?:Request;
     ip?:string;
@@ -19,7 +21,7 @@ export interface SaveLogOptions{
 }
 
 
-function stringfyError(err:any):string{
+export function stringfyError(err:any):string{
    const type=typeof(err);
    if(type!=='object')
       return err.toString();
@@ -36,7 +38,7 @@ function stringfyError(err:any):string{
    }
    return retData;
 }
-function getIpFromRequest(req:Request){
+export function getIpFromRequest(req:Request){
         //@
         let ips = (
             req.headers['cf-connecting-ip'] ||
@@ -73,6 +75,12 @@ export function saveLog(options:SaveLogOptions){
         fs.mkdirSync(BASE_LOG_PATH);
     }
     let basePath=BASE_LOG_PATH;
+    if(options.addPath){
+        basePath=path.join(basePath,options.addPath);
+        if(!fs.existsSync(basePath)){
+            fs.mkdirSync(basePath);
+        }
+    }
     if(options.userId){
          basePath=path.join(basePath,options.userId.toString());
     }else{
@@ -81,7 +89,7 @@ export function saveLog(options:SaveLogOptions){
     if(!fs.existsSync(basePath)){
         fs.mkdirSync(basePath);
     }
-    let fileName=path.join(basePath,`${getDateString(new Date())}.csv`);
+    let fileName=path.join(basePath,`${options.filePrefix?options.filePrefix+'_':""}${getDateString(new Date())}.csv`);
     let data="";
     if(fs.existsSync(fileName)){
         data=fs.readFileSync(fileName).toString()+"\n";
