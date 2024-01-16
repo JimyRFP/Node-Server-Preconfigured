@@ -30,7 +30,7 @@ function stringfyError(err) {
     let ret = {};
     for (let key of Object.keys(err)) {
         let value = err[key];
-        ret[key] = typeof (value) == 'object' ? 'Is Object' : value.toString();
+        ret[key] = typeof (value) == 'object' ? stringfyObject(value) : value.toString();
     }
     let retData = "";
     try {
@@ -38,6 +38,14 @@ function stringfyError(err) {
     }
     catch (e) {
         retData = "error on stringfy error data";
+    }
+    function stringfyObject(obj) {
+        let ret = {};
+        for (let key of Object.keys(obj)) {
+            let value = obj[key];
+            ret[key] = typeof (value) == 'object' ? 'Is Object' : value === null || value === void 0 ? void 0 : value.toString();
+        }
+        return JSON.stringify(ret);
     }
     return retData;
 }

@@ -28,7 +28,7 @@ export function stringfyError(err:any):string{
    let ret:any={};
    for(let key of Object.keys(err)){
        let value=err[key];
-       ret[key]=typeof(value)=='object'?'Is Object':value.toString();
+       ret[key]=typeof(value)=='object'?stringfyObject(value):value.toString();
    }
    let retData="";
    try{
@@ -36,8 +36,18 @@ export function stringfyError(err:any):string{
    }catch(e){
       retData="error on stringfy error data";
    }
+   function stringfyObject(obj:any){
+        let ret:any={};
+        for(let key of Object.keys(obj)){
+            let value=obj[key];
+            ret[key]=typeof(value)=='object'?'Is Object':value?.toString();
+        }
+        return JSON.stringify(ret);
+   }
    return retData;
 }
+
+
 export function getIpFromRequest(req:Request){
         //@
         let ips = (

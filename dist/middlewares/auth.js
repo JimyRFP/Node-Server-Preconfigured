@@ -23,7 +23,7 @@ function setUserDataMiddleware(req, res, next) {
             const user = yield server_1.User.findOne({ where: { email: dealerEmail, is_active: true } });
             if (!user)
                 throw "Unknown user";
-            req.user = { email: dealerEmail, id: user.id };
+            req.user = user;
             yield (0, server_1.updateUserLastAction)(user);
             next();
         }
