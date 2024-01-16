@@ -27,27 +27,19 @@ function stringfyError(err) {
     const type = typeof (err);
     if (type !== 'object')
         return err.toString();
-    let ret = {};
-    for (let key of Object.keys(err)) {
-        let value = err[key];
-        ret[key] = typeof (value) == 'object' ? stringfyObject(value) : value.toString();
-    }
-    let retData = "";
-    try {
-        retData = JSON.stringify(ret);
-    }
-    catch (e) {
-        retData = "error on stringfy error data";
-    }
-    function stringfyObject(obj) {
+    let ret = stringfyObject(err, 0);
+    return ret;
+    function stringfyObject(obj, level = 0) {
+        if (level == 8)
+            return "Is Object level max 8";
         let ret = {};
         for (let key of Object.keys(obj)) {
             let value = obj[key];
-            ret[key] = typeof (value) == 'object' ? 'Is Object' : value === null || value === void 0 ? void 0 : value.toString();
+            //@ts-ignore
+            ret[key] = typeof (value) == 'object' ? stringfyObject(value, level + 1).replaceAll('\\', '') : value === null || value === void 0 ? void 0 : value.toString();
         }
         return JSON.stringify(ret);
     }
-    return retData;
 }
 exports.stringfyError = stringfyError;
 function getIpFromRequest(req) {
