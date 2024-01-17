@@ -1,6 +1,6 @@
 {
   "name": "serverpreconfigured",
-  "version": "2.2.7",
+  "version": "2.2.8",
   "description": "\"Pre-configured server with authentication system and database integration\"",
   "main": "dist/server.js",
   "keywords": [

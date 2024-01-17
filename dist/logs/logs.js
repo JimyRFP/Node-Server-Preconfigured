@@ -28,8 +28,12 @@ function stringfyError(err) {
     if (type !== 'object')
         return err.toString();
     let ret = stringfyObject(err, 0);
-    return ret;
+    return ret || "";
     function stringfyObject(obj, level = 0) {
+        if (!obj)
+            return null;
+        if (typeof (obj) !== 'object')
+            return obj.toString();
         if (level == 8)
             return "Is Object level max 8";
         let ret = {};

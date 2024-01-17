@@ -26,8 +26,12 @@ export function stringfyError(err:any):string{
    if(type!=='object')
       return err.toString();
    let ret=stringfyObject(err,0);
-   return ret;
+   return ret||"";
    function stringfyObject(obj:any,level:number=0){
+        if(!obj)
+           return null;
+        if(typeof(obj)!=='object')
+          return obj.toString();
         if(level==8)
            return "Is Object level max 8";
         let ret:any={};
