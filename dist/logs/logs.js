@@ -31,10 +31,10 @@ function stringfyError(err) {
     return ret || "";
     function stringfyObject(obj, level = 0) {
         if (!obj)
-            return null;
+            return "";
         if (typeof (obj) !== 'object')
             return obj.toString();
-        if (level == 8)
+        if (level == 5)
             return "Is Object level max 8";
         let ret = {};
         for (let key of Object.keys(obj)) {
