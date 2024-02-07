@@ -52,6 +52,6 @@ router.post('/login',async (req,res)=>{
 });
 
 router.post('/getuser',setUserDataMiddleware,async (req:any,res)=>{
-    res.send(JSONResponse({},{email:req.user.email,id:req.user.id}));
+    res.send(JSONResponse({email:req.user.email,id:req.user.id}));
 });
 export default router;

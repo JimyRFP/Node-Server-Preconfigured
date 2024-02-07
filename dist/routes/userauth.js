@@ -63,6 +63,6 @@ router.post('/login', (req, res) => __awaiter(void 0, void 0, void 0, function* 
     }
 }));
 router.post('/getuser', auth_2.setUserDataMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    res.send((0, response_1.JSONResponse)({}, { email: req.user.email, id: req.user.id }));
+    res.send((0, response_1.JSONResponse)({ email: req.user.email, id: req.user.id }));
 }));
 exports.default = router;
