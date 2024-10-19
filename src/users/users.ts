@@ -1,10 +1,9 @@
-import {dataBase} from "./../database/database";
+
 import { User } from "./../database/models/User";
 import { createArgon2Hash,checkArgon2Password } from "./password";
 import {UserCreateInterface} from "./types";
 import {SESSION_LOGGED_DATA} from "../auth/config";
 import {getSessionValue} from "../sessions/secureget";
-User.init(dataBase);
 
 export async function updateUserLastAction(user:User){
      try{
@@ -80,8 +79,8 @@ export async function changeUserPassword(email:string,password:string):Promise<U
           if(!user)   
              throw "Unknwon User";
           let hash=await createArgon2Hash(password);
-          if(!hash)
-            "Create Hash Error";
+          if(typeof(hash)!=="string")
+             throw "Create Hash Error";
           user.password_hash=hash;
           await user.save();
           return user;     

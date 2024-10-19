@@ -1,5 +1,6 @@
 import { Model } from "sequelize";
 import { DataTypes } from "sequelize";
+import { dataBase } from "../database";
 
 export class User extends Model{
     declare id:number;
@@ -8,20 +9,18 @@ export class User extends Model{
     declare is_active:boolean;
     declare password_hash:string;
     declare last_action:Date;
-    static init(sequelize:any){
-        super.init({
-            first_name:DataTypes.STRING,
-            email:DataTypes.STRING,
-            is_active:DataTypes.BOOLEAN,
-            password_hash:DataTypes.STRING,
-            last_action:DataTypes.DATE,
-        },
-        { 
-          sequelize:sequelize,  
-          tableName: 'spc_users',  
-        }
-        );
-    }
 }
+User.init({
+    first_name:DataTypes.STRING,
+    email:DataTypes.STRING,
+    is_active:DataTypes.BOOLEAN,
+    password_hash:DataTypes.STRING,
+    last_action:DataTypes.DATE,
+},
+{ 
+  sequelize:dataBase,  
+  tableName: 'spc_users',  
+}
+);
 
 

@@ -1,7 +1,7 @@
 import { WebSocketAuth } from "../server";
-import { dataBase } from "../server";
+
 import {randomString} from "./../utils/string/random";
-WebSocketAuth.init(dataBase);
+
 export async function getWSAuthDataByUserId(userId:number):Promise<any>{
    try{
       let u=await WebSocketAuth.findOne({where:{user_id:userId.toString()}});

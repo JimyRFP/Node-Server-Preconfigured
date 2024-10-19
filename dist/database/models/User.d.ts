@@ -6,5 +6,4 @@ export declare class User extends Model {
     is_active: boolean;
     password_hash: string;
     last_action: Date;
-    static init(sequelize: any): void;
 }

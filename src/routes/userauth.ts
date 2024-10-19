@@ -34,7 +34,7 @@ router.post('/login',async (req,res)=>{
     try{
       const checkPass=await checkUserPassword(email,password);
       if(checkPass){
-         const user:User=await User.findOne({where:{email:email}});
+         const user=await User.findOne({where:{email:email}});
          if(!user)
             throw "Dont find User";
          if(!user.is_active){

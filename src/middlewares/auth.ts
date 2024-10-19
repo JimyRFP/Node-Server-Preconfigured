@@ -11,7 +11,7 @@ export async function setUserDataMiddleware(req:any,res:any,next:any){
       return res.status(401).send(JSONResponse({},"User Must Be Logged"));
     try{
         const dealerEmail=getUserSessionData(req);
-        const user:User=await User.findOne({where:{email:dealerEmail,is_active:true}});
+        const user=await User.findOne({where:{email:dealerEmail,is_active:true}});
         if(!user)
           throw "Unknown user";
         req.user=user;

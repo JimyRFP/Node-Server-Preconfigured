@@ -11,9 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.checkConnectionAuth = exports.authenticateWS = exports.checkWSAuthToken = exports.setWSAuthDataNewToken = exports.getWSAuthDataByUserId = void 0;
 const server_1 = require("../server");
-const server_2 = require("../server");
 const random_1 = require("./../utils/string/random");
-server_1.WebSocketAuth.init(server_2.dataBase);
 function getWSAuthDataByUserId(userId) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
