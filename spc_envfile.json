@@ -1,5 +1,8 @@
 {
     "DATABASE":{
-        "DATABASE":false
+        "DATABASE":"vini",
+        "USERNAME":"postgres",
+        "PASSWORD":"pass",
+        "PORT":5232
     }
 }
