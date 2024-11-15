@@ -1,14 +1,20 @@
 import fs from "fs";
 import path from "path";
 const custom_env_path=path.join(process.cwd(),"spc_envfile.json");
+const custom_env_path_prod=path.join(process.cwd(),"spc_envfile_prod.json");
 var custom_env:any={};
 try{
-   custom_env=JSON.parse(fs.readFileSync(custom_env_path).toString());
+   
+   if(process.env.DEV_ENVIRONMENT){
+     custom_env=JSON.parse(fs.readFileSync(custom_env_path).toString());
+   }else{
+     custom_env=JSON.parse(fs.readFileSync(custom_env_path_prod).toString());
+   }
 }catch(e){
    custom_env={};
 }
 const ENV={
-    NODE_ENV:process.env.SERVER_ENV=='development'?'development':'production',
+    NODE_ENV:process.env.DEV_ENVIRONMENT?'development':'production',
     ALLOW_CORS:process.env.ALLOW_CORS=='ALLOW'?true:false,
     PORT:process.env.SERVER_PORT?parseInt(process.env.SERVER_PORT):3000,
     DATABASE:{
