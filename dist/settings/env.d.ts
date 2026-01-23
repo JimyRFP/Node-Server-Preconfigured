@@ -4,11 +4,11 @@ declare const ENV: {
     PORT: number;
     DATABASE: {
         dialect: string;
-        port: any;
-        host: any;
-        database: any;
-        username: any;
-        password: string | undefined;
+        port: string | number | undefined;
+        host: string | undefined;
+        database: string | undefined;
+        username: string | undefined;
+        password: any;
     };
     SESSION_SECRET: string;
 };

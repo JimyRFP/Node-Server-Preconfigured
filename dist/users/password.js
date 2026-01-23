@@ -12,7 +12,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.checkArgon2Password = exports.createArgon2Hash = void 0;
+exports.createArgon2Hash = createArgon2Hash;
+exports.checkArgon2Password = checkArgon2Password;
 const argon2_1 = __importDefault(require("argon2"));
 function createArgon2Hash(password_string) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -25,7 +26,6 @@ function createArgon2Hash(password_string) {
         }
     });
 }
-exports.createArgon2Hash = createArgon2Hash;
 function checkArgon2Password(password_hash, password_string) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -38,4 +38,3 @@ function checkArgon2Password(password_hash, password_string) {
         }
     });
 }
-exports.checkArgon2Password = checkArgon2Password;

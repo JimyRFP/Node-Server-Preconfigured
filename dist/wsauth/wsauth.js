@@ -9,7 +9,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.checkConnectionAuth = exports.authenticateWS = exports.checkWSAuthToken = exports.setWSAuthDataNewToken = exports.getWSAuthDataByUserId = void 0;
+exports.getWSAuthDataByUserId = getWSAuthDataByUserId;
+exports.setWSAuthDataNewToken = setWSAuthDataNewToken;
+exports.checkWSAuthToken = checkWSAuthToken;
+exports.authenticateWS = authenticateWS;
+exports.checkConnectionAuth = checkConnectionAuth;
 const server_1 = require("../server");
 const random_1 = require("./../utils/string/random");
 function getWSAuthDataByUserId(userId) {
@@ -23,9 +27,8 @@ function getWSAuthDataByUserId(userId) {
         }
     });
 }
-exports.getWSAuthDataByUserId = getWSAuthDataByUserId;
-function setWSAuthDataNewToken(userId, expiration_hours = 72) {
-    return __awaiter(this, void 0, void 0, function* () {
+function setWSAuthDataNewToken(userId_1) {
+    return __awaiter(this, arguments, void 0, function* (userId, expiration_hours = 72) {
         try {
             let ws = yield getWSAuthDataByUserId(userId);
             let token = (0, random_1.randomString)(50);
@@ -52,7 +55,6 @@ function setWSAuthDataNewToken(userId, expiration_hours = 72) {
         }
     });
 }
-exports.setWSAuthDataNewToken = setWSAuthDataNewToken;
 function checkWSAuthToken(userId, token) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -72,7 +74,6 @@ function checkWSAuthToken(userId, token) {
         }
     });
 }
-exports.checkWSAuthToken = checkWSAuthToken;
 function authenticateWS(userId, token, connection_token) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -88,7 +89,6 @@ function authenticateWS(userId, token, connection_token) {
         }
     });
 }
-exports.authenticateWS = authenticateWS;
 function checkConnectionAuth(userId, connection_token) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -108,4 +108,3 @@ function checkConnectionAuth(userId, connection_token) {
         }
     });
 }
-exports.checkConnectionAuth = checkConnectionAuth;

@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.setUserDataMiddleware = void 0;
+exports.setUserDataMiddleware = setUserDataMiddleware;
 const server_1 = require("../server");
 const server_2 = require("../server");
 const server_3 = require("../server");
@@ -32,4 +32,3 @@ function setUserDataMiddleware(req, res, next) {
         }
     });
 }
-exports.setUserDataMiddleware = setUserDataMiddleware;

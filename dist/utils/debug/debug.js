@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.debugMessage = void 0;
+exports.debugMessage = debugMessage;
 function debugMessage(isDebug, message, data = {}) {
     if (!isDebug)
         return;
@@ -12,4 +12,3 @@ function debugMessage(isDebug, message, data = {}) {
         "\nMessage: " + message +
         (addData ? "\naddData: " + addData : ""));
 }
-exports.debugMessage = debugMessage;

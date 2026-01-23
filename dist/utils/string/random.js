@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.randomString = void 0;
+exports.randomString = randomString;
 function randomString(length) {
     var result = '';
     var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -11,4 +11,3 @@ function randomString(length) {
     }
     return result;
 }
-exports.randomString = randomString;

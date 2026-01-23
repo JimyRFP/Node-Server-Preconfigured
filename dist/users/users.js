@@ -9,7 +9,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.checkUserPassword = exports.changeUserPassword = exports.createUser = exports.isUserExist = exports.deleteUserById = exports.getUserIdByUserEmail = exports.getUserByEmail = exports.getUserById = exports.getUserSessionData = exports.updateUserLastAction = void 0;
+exports.updateUserLastAction = updateUserLastAction;
+exports.getUserSessionData = getUserSessionData;
+exports.getUserById = getUserById;
+exports.getUserByEmail = getUserByEmail;
+exports.getUserIdByUserEmail = getUserIdByUserEmail;
+exports.deleteUserById = deleteUserById;
+exports.isUserExist = isUserExist;
+exports.createUser = createUser;
+exports.changeUserPassword = changeUserPassword;
+exports.checkUserPassword = checkUserPassword;
 const User_1 = require("./../database/models/User");
 const password_1 = require("./password");
 const config_1 = require("../auth/config");
@@ -26,25 +35,21 @@ function updateUserLastAction(user) {
         }
     });
 }
-exports.updateUserLastAction = updateUserLastAction;
 function getUserSessionData(req) {
     return (0, secureget_1.getSessionValue)(req, config_1.SESSION_LOGGED_DATA);
 }
-exports.getUserSessionData = getUserSessionData;
 function getUserById(id) {
     return __awaiter(this, void 0, void 0, function* () {
         let result = yield User_1.User.findOne({ where: { id: id.toString() } });
         return (result);
     });
 }
-exports.getUserById = getUserById;
 function getUserByEmail(email) {
     return __awaiter(this, void 0, void 0, function* () {
         let result = yield User_1.User.findOne({ where: { email: email } });
         return (result);
     });
 }
-exports.getUserByEmail = getUserByEmail;
 function getUserIdByUserEmail(email) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -58,14 +63,12 @@ function getUserIdByUserEmail(email) {
         }
     });
 }
-exports.getUserIdByUserEmail = getUserIdByUserEmail;
 function deleteUserById(id) {
     return __awaiter(this, void 0, void 0, function* () {
         let result = yield User_1.User.destroy({ where: { id: id.toString() } });
         return result;
     });
 }
-exports.deleteUserById = deleteUserById;
 function isUserExist(email) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -77,7 +80,6 @@ function isUserExist(email) {
         }
     });
 }
-exports.isUserExist = isUserExist;
 function createUser(data) {
     return __awaiter(this, void 0, void 0, function* () {
         let user_exist = false;
@@ -103,7 +105,6 @@ function createUser(data) {
         }
     });
 }
-exports.createUser = createUser;
 function changeUserPassword(email, password) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -122,7 +123,6 @@ function changeUserPassword(email, password) {
         }
     });
 }
-exports.changeUserPassword = changeUserPassword;
 function checkUserPassword(email, password_string) {
     return __awaiter(this, void 0, void 0, function* () {
         let user;
@@ -140,4 +140,3 @@ function checkUserPassword(email, password_string) {
         return false;
     });
 }
-exports.checkUserPassword = checkUserPassword;

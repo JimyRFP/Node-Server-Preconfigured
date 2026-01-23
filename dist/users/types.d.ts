@@ -3,4 +3,4 @@ export interface UserCreateInterface {
     email: string;
     password_string: string;
 }
-export declare type PasswordVerifyResult = 'Match' | 'Dont Match';
+export type PasswordVerifyResult = 'Match' | 'Dont Match';

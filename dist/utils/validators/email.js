@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.checkEmail = void 0;
+exports.checkEmail = checkEmail;
 function checkEmail(email) {
     const atIndex = email.indexOf("@");
     if (atIndex < 1)
@@ -15,4 +15,3 @@ function checkEmail(email) {
         return false;
     return true;
 }
-exports.checkEmail = checkEmail;

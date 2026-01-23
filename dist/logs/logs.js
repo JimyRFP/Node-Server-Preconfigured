@@ -12,7 +12,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.saveLog = exports.saveInternalErrorLog = exports.getIpFromRequest = exports.stringfyError = exports.LogSeverity = exports.BASE_LOG_PATH = void 0;
+exports.LogSeverity = exports.BASE_LOG_PATH = void 0;
+exports.stringfyError = stringfyError;
+exports.getIpFromRequest = getIpFromRequest;
+exports.saveInternalErrorLog = saveInternalErrorLog;
+exports.saveLog = saveLog;
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
 exports.BASE_LOG_PATH = './logs';
@@ -22,7 +26,7 @@ var LogSeverity;
     LogSeverity["servere"] = "severe";
     LogSeverity["moderate"] = "moderate";
     LogSeverity["info"] = "info";
-})(LogSeverity = exports.LogSeverity || (exports.LogSeverity = {}));
+})(LogSeverity || (exports.LogSeverity = LogSeverity = {}));
 function stringfyError(err) {
     const type = typeof (err);
     if (type !== 'object')
@@ -45,7 +49,6 @@ function stringfyError(err) {
         return JSON.stringify(ret);
     }
 }
-exports.stringfyError = stringfyError;
 function getIpFromRequest(req) {
     //@
     let ips = (req.headers['cf-connecting-ip'] ||
@@ -57,10 +60,9 @@ function getIpFromRequest(req) {
     }
     return ips[0].trim();
 }
-exports.getIpFromRequest = getIpFromRequest;
 function saveInternalErrorLog(req, error, options) {
-    var _a;
     return __awaiter(this, void 0, void 0, function* () {
+        var _a;
         try {
             const ip = getIpFromRequest(req);
             const url = req.originalUrl;
@@ -81,7 +83,6 @@ function saveInternalErrorLog(req, error, options) {
         }
     });
 }
-exports.saveInternalErrorLog = saveInternalErrorLog;
 function saveLog(options) {
     if (!fs_1.default.existsSync(exports.BASE_LOG_PATH)) {
         fs_1.default.mkdirSync(exports.BASE_LOG_PATH);
@@ -117,7 +118,6 @@ function saveLog(options) {
         basePath,
     };
 }
-exports.saveLog = saveLog;
 function getDateString(d) {
     const year = d.getFullYear();
     const month = zerof(d.getMonth() + 1);

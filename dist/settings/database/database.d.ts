@@ -1,11 +1,11 @@
-export const dialect: string;
-export const host: any;
-export const database: any;
-export const username: any;
-export const password: string | undefined;
-export const port: any;
+export let dialect: string;
+export let host: string | undefined;
+export let database: string | undefined;
+export let username: string | undefined;
+export let password: any;
+export let port: string | number | undefined;
 export namespace define {
-    const underscored: boolean;
-    const timestamps: boolean;
+    let underscored: boolean;
+    let timestamps: boolean;
 }
-export const logging: boolean;
+export let logging: boolean;

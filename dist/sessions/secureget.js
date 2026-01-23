@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getSessionValue = void 0;
+exports.getSessionValue = getSessionValue;
 function getSessionValue(req, get) {
     return req.session[get];
 }
-exports.getSessionValue = getSessionValue;
