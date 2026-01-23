@@ -1,9 +1,9 @@
 export let dialect: string;
-export let host: string | undefined;
-export let database: string | undefined;
-export let username: string | undefined;
+export let host: any;
+export let database: any;
+export let username: any;
 export let password: any;
-export let port: string | number | undefined;
+export let port: any;
 export namespace define {
     let underscored: boolean;
     let timestamps: boolean;
